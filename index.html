@@ -176,69 +176,7 @@ footer{padding:40px 0 28px;border-top:1px solid rgba(255,255,255,.06);text-align
   font-size: 0.95rem;
   color: #ddd;
 }
-/* Blood Emergency Card */
-.blood-emergency {
-  padding: 25px 20px 45px;
-  display: flex;
-  justify-content: center;
-}
 
-.blood-emergency-card {
-  width: min(650px, 100%);
-  padding: 30px 25px;
-  text-align: center;
-  border-radius: 22px;
-  background: linear-gradient(
-    135deg,
-    rgba(220, 38, 38, 0.12),
-    rgba(127, 29, 29, 0.08)
-  );
-  border: 1px solid rgba(220, 38, 38, 0.25);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
-}
-  .blood-emergency-card h3 {
-  font-size: 1.7rem;
-  margin: 5px 0 10px;
-}
-
-.blood-emergency-card .blood-icon {
-  font-size: 2.5rem;
-  color: #dc2626;
-  margin-bottom: 10px;
-  animation: bloodPulse 1.5s infinite;
-}
-
-.blood-emergency-card p {
-  min-height: 28px;
-  margin: 0 0 20px;
-  opacity: 0.8;
-  font-size: 1rem;
-}
-  .find-blood-btn {
-  border: none;
-  padding: 12px 22px;
-  border-radius: 10px;
-  background: #dc2626;
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.find-blood-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
-}
-  @keyframes bloodPulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.12);
-  }
-}
 @media (max-width: 480px) {
   .blood-modal-content {
     padding: 30px 18px;
@@ -283,20 +221,7 @@ footer{padding:40px 0 28px;border-top:1px solid rgba(255,255,255,.06);text-align
 <div class="hero-image"><img id="profileImage" src="IMG_20260803_135858_edit_58725-02.jpg" alt="Md. Soleman Ali"></div>
 </div>
 </section>
-<!-- Blood Emergency Card -->
-<section class="blood-emergency">
-  <div class="blood-emergency-card">
-    <i class="fas fa-tint blood-icon"></i>
 
-    <h3>Need Blood?</h3>
-
-    <p id="bloodWordAnimation"></p>
-
-    <button class="find-blood-btn" onclick="openBloodDonor()">
-      <i class="fas fa-search"></i> Find Blood Donor
-    </button>
-  </div>
-</section>
 <section id="about"><div class="container">
 <h2 class="section-title">About Me</h2><p class="section-subtitle">Who I am & what I do</p>
 <div class="about-grid">
@@ -532,32 +457,6 @@ document.addEventListener("keydown", function(e) {
     closeBloodDonor();
   }
 });
-</script>
-  <script>
-const bloodWords = [
-  "Find",
-  "blood",
-  "donor",
-  "assistance",
-  "by",
-  "blood",
-  "group"
-];
-
-const bloodText = document.getElementById("bloodWordAnimation");
-
-let bloodIndex = 0;
-
-function showBloodWord() {
-  if (bloodIndex < bloodWords.length) {
-    bloodText.textContent = bloodWords[bloodIndex];
-    bloodIndex++;
-
-    setTimeout(showBloodWord, 700);
-  }
-}
-
-showBloodWord();
 </script>
 </body>
 </html>
