@@ -534,32 +534,41 @@ document.addEventListener("keydown", function(e) {
     closeBloodDonor();
   }
 });
-    const bloodWords = [
-  "Find",
-  "blood",
-  "donor",
-  "assistance",
-  "by",
-  "blood",
-  "group"
-];
+  const bloodText = document.getElementById("bloodWordAnimation");
 
-const bloodText = document.getElementById("bloodWordAnimation");
+const bloodSentence = "Find blood donor assistance by blood group";
 
+let bloodTyping = true;
 let bloodIndex = 0;
 
-function showBloodWord() {
+function bloodTypingAnimation() {
   if (!bloodText) return;
 
-  if (bloodIndex < bloodWords.length) {
-    bloodText.textContent = bloodWords[bloodIndex];
+  if (bloodTyping) {
+    bloodText.textContent = bloodSentence.substring(0, bloodIndex);
     bloodIndex++;
 
-    setTimeout(showBloodWord, 700);
+    if (bloodIndex > bloodSentence.length) {
+      bloodTyping = false;
+      setTimeout(bloodTypingAnimation, 1200);
+      return;
+    }
+
+    setTimeout(bloodTypingAnimation, 70);
+  } else {
+    bloodText.textContent = bloodSentence.substring(0, bloodIndex);
+    bloodIndex--;
+
+    if (bloodIndex < 0) {
+      bloodIndex = 0;
+      bloodTyping = true;
+    }
+
+    setTimeout(bloodTypingAnimation, 50);
   }
 }
 
-showBloodWord();
+bloodTypingAnimation();
 </script>
 </body>
 </html>
