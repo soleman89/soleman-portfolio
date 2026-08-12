@@ -69,6 +69,128 @@ footer{padding:40px 0 28px;border-top:1px solid rgba(255,255,255,.06);text-align
 @media(max-width:992px){.hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;text-align:center}.hero-image img{width:240px;height:240px}.hero-content h1{font-size:2.8rem}.section-title{display:block;text-align:center}.section-title:after{left:50%;transform:translateX(-50%)}.section-subtitle{text-align:center}.timeline{text-align:left}}
 @media(max-width:768px){.nav-links{position:fixed;inset:0;background:rgba(11,11,11,.97);flex-direction:column;justify-content:center;gap:28px;transform:translateX(100%);transition:.35s;padding:40px}.nav-links.open{transform:translateX(0)}.nav-links a{font-size:1.3rem}.hamburger{display:block;z-index:1000}.theme-toggle{font-size:1.7rem}.hero-content h1{font-size:2.2rem}.hero-typing{font-size:1.1rem}.hero-image img{width:200px;height:200px}section{padding:60px 0}}
 @media(max-width:480px){.container{padding:0 16px}.hero-content h1{font-size:1.9rem}.section-title{font-size:1.8rem}.skills-grid{grid-template-columns:repeat(2,1fr);gap:14px}.gallery-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+  
+  </style>
+
+<style>
+.blood-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.blood-modal.active {
+  display: flex;
+}
+
+.blood-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  background: #151515;
+  border: 1px solid rgba(198, 40, 40, 0.35);
+  border-radius: 28px;
+  padding: 35px 25px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: bloodPopup 0.3s ease;
+}
+
+@keyframes bloodPopup {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.blood-icon {
+  font-size: 3rem;
+  color: #c62828;
+  margin-bottom: 10px;
+}
+
+.blood-modal-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+.blood-modal-content > p {
+  opacity: 0.7;
+  margin-bottom: 25px;
+}
+
+.blood-groups {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.blood-groups button {
+  padding: 14px 10px;
+  border: 1px solid #c62828;
+  border-radius: 14px;
+  background: rgba(198, 40, 40, 0.08);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.blood-groups button:hover {
+  background: #c62828;
+  transform: translateY(-2px);
+}
+
+.blood-close {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.blood-close:hover {
+  background: #c62828;
+}
+
+#bloodResult {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #ddd;
+}
+
+@media (max-width: 480px) {
+  .blood-modal-content {
+    padding: 30px 18px;
+  }
+
+  .blood-groups {
+    gap: 10px;
+  }
+
+  .blood-groups button {
+    padding: 12px 8px;
+    font-size: 0.9rem;
+  }
+}
 </style>
 </head>
 <body>
@@ -153,7 +275,11 @@ footer{padding:40px 0 28px;border-top:1px solid rgba(255,255,255,.06);text-align
 <section id="activities"><div class="container">
 <h2 class="section-title">Volunteer & Community</h2><p class="section-subtitle">Activities and engagement</p>
 <div class="activity-grid">
-<div class="activity-card"><i class="fas fa-hand-holding-heart"></i><h4>Blood Donation Awareness</h4><p>Promoting blood donation awareness and helping community initiatives.</p></div>
+<div class="activity-card" onclick="openBloodDonor()">
+  <i class="fas fa-hand-holding-heart"></i>
+  <h4>Blood Donor Service</h4>
+  <p>Find blood donors by blood group and location.</p>
+</div>
 <div class="activity-card"><i class="fas fa-users"></i><h4>Youth Development</h4><p>Participating in youth activities, networking and skill-building.</p></div>
 <div class="activity-card"><i class="fas fa-bullhorn"></i><h4>YouthX · Campus Coordinator</h4><p>Supporting youth development and leadership activities.</p></div>
 <div class="activity-card"><i class="fas fa-comments"></i><h4>Communication & Networking</h4><p>Building professional connections and communication skills.</p></div>
@@ -238,6 +364,98 @@ document.getElementById('closeLightbox').onclick=close;lightbox.onclick=e=>{if(e
 
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.08});
 document.querySelectorAll('.section-title,.section-subtitle,.skill-card,.service-card,.activity-card,.project-card,.gallery-item,.about-text p,.timeline-item,.contact-info p,.card').forEach(el=>{el.classList.add('reveal');observer.observe(el)});
+});
+</script>
+  <!-- Blood Donor Popup -->
+<div id="bloodDonorModal" class="blood-modal">
+  <div class="blood-modal-content">
+    <button class="blood-close" onclick="closeBloodDonor()">&times;</button>
+
+    <i class="fas fa-tint blood-icon"></i>
+    <h2>🩸 Need Blood?</h2>
+    <p>Select the blood group you need</p>
+
+    <div class="blood-groups">
+      <button onclick="selectBlood('A+')">Need A+</button>
+      <button onclick="selectBlood('A-')">Need A−</button>
+      <button onclick="selectBlood('B+')">Need B+</button>
+      <button onclick="selectBlood('B-')">Need B−</button>
+      <button onclick="selectBlood('O+')">Need O+</button>
+      <button onclick="selectBlood('O-')">Need O−</button>
+      <button onclick="selectBlood('AB+')">Need AB+</button>
+      <button onclick="selectBlood('AB-')">Need AB−</button>
+    </div>
+
+    <div id="bloodResult"></div>
+  </div>
+</div>
+  <script>
+function openBloodDonor() {
+  document.getElementById("bloodDonorModal").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeBloodDonor() {
+  document.getElementById("bloodDonorModal").classList.remove("active");
+  document.body.style.overflow = "";
+  document.getElementById("bloodResult").innerHTML = "";
+}
+
+function selectBlood(group) {
+  const result = document.getElementById("bloodResult");
+
+  result.innerHTML = `
+    <div style="
+      margin-top:20px;
+      padding:16px;
+      border-radius:16px;
+      background:rgba(198,40,40,0.10);
+      border:1px solid rgba(198,40,40,0.30);
+    ">
+      <strong style="color:#c62828;font-size:1.1rem;">
+        🩸 Need ${group} Blood
+      </strong>
+
+      <p style="
+        margin:8px 0 0;
+        opacity:0.75;
+        font-size:0.9rem;
+      ">
+        Please contact for blood donor assistance.
+      </p>
+
+      <a
+        href="https://wa.me/8801835026822?text=I%20need%20${encodeURIComponent(group)}%20blood"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="
+          display:inline-block;
+          margin-top:12px;
+          padding:10px 20px;
+          border-radius:30px;
+          background:#c62828;
+          color:#fff;
+          font-weight:600;
+          text-decoration:none;
+        "
+      >
+        <i class="fab fa-whatsapp"></i>
+        Contact on WhatsApp
+      </a>
+    </div>
+  `;
+}
+
+document.getElementById("bloodDonorModal").addEventListener("click", function(e) {
+  if (e.target === this) {
+    closeBloodDonor();
+  }
+});
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    closeBloodDonor();
+  }
 });
 </script>
 </body>
